@@ -3,7 +3,8 @@ package alistlib
 import (
 	"github.com/alist-org/alist/v3/cmd"
 	"github.com/alist-org/alist/v3/cmd/flags"
-	"github.com/alist-org/alist/v3/internal"
+	"github.com/alist-org/alist/v3/internal"	
+	"github.com/alist-org/alist/v3/internal/op"
 	"github.com/alist-org/alist/v3/pkg/utils"
 )
 
