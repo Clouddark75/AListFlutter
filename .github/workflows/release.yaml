@@ -14,7 +14,7 @@ jobs:
     env:
       output: "${{ github.workspace }}/build/app/outputs/apk/release"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -27,7 +27,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.22
+          go-version: 1.23
           cache-dependency-path: ${{ github.workspace }}/alist-lib/alist/go.sum
 
       - uses: actions/setup-java@v4
@@ -41,7 +41,7 @@ jobs:
           ndk-version: r25c
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/gradle-build-action@v4
 
       - name: Build AList
         run: |
