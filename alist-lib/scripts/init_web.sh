@@ -1,4 +1,4 @@
-Egg#!/bin/bash
+#!/bin/bash
 
 curl -L https://github.com/li-peifeng/iSweet-Web/releases/latest/download/dist.tar.gz -o dist.tar.gz
 tar -zxvf dist.tar.gz
