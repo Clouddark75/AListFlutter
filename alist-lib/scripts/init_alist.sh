@@ -6,7 +6,7 @@ TAG_NAME=$(git -c 'versionsort.suffix=-' ls-remote --exit-code --refs --sort='ve
 echo "AList - ${TAG_NAME}"
 rm -rf ./src
 unset GIT_WORK_TREE
-git clone --branch "$TAG_NAME" https://github.com/URenko/alist.git ./src
+git clone --branch main https://github.com/URenko/alist.git ./src
 rm -rf ./src/.git
 
 mv -f ./src/* ../
