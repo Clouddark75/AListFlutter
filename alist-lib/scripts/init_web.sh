@@ -1,9 +1,7 @@
 #!/bin/bash
 
-LATEST_TAG=$(curl "https://api.github.com/repos/OpenListTeam/OpenList-Frontend/releases/latest"| jq -r '.tag_name')
-
-curl -L https://github.com/OpenListTeam/OpenList-Frontend/releases/latest/download/openlist-frontend-dist-${LATEST_TAG}.tar.gz -o dist.tar.gz
+curl -L https://github.com/li-peifeng/iNoi-Web/releases/latest/download/dist.tar.gz -o dist.tar.gz
+tar -zxvf dist.tar.gz
 rm -rf ../public/dist
-mkdir -p ../public/dist
-tar -zxvf dist.tar.gz -C ../public/dist
+mv -f dist ../public
 rm -rf dist.tar.gz
