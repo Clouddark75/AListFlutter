@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'AListFlutter',
+      title: 'OpenListFlutter',
       themeMode: ThemeMode.system,
       theme: ThemeData(
         useMaterial3: true,
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
           border: OutlineInputBorder(),
         ),
       ),
-      darkTheme:ThemeData(
+      darkTheme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
         colorSchemeSeed: Colors.blueGrey,
@@ -101,7 +101,7 @@ class MyHomePage extends StatelessWidget {
                   ),
                   NavigationDestination(
                     icon: SvgPicture.asset(
-                      "assets/alist.svg",
+                      "assets/openlist.svg",
                       color: Theme.of(context).hintColor,
                       width: 32,
                       height: 32,

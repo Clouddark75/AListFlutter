@@ -1,11 +1,6 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - "master"
-    paths:
-      - "CHANGELOG.md"
   workflow_dispatch:
 
 jobs:
@@ -18,16 +13,37 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download AList Source Code
+      - name: Download OpenList Source Code
         run: |
           cd $GITHUB_WORKSPACE/alist-lib/scripts
           chmod +x *.sh
           ./init_alist.sh
           ./init_web.sh
 
+      - name: Check OpenList Version
+        run: |
+          cd $GITHUB_WORKSPACE/.github/scripts
+          chmod +x ./*.sh
+          touch $GITHUB_WORKSPACE/openlist_version
+          ./check_openlist.sh
+        env:
+          VERSION_FILE: ${{ github.workspace }}/openlist_version
+
+      - name: Update OpenList Version and Changelog
+        run: |
+          if [ ${{ env.openlist_update }} -eq 0 ]
+          then
+            echo "无更新"
+            exit 0
+          else
+            echo "更新本地 openlist_version ${{ env.openlist_version }}"
+            echo -e "[自动同步OpenList] ${{ env.openlist_version }}" > $GITHUB_WORKSPACE/CHANGELOG.md
+            echo -e "${{ env.openlist_version }}" > $GITHUB_WORKSPACE/openlist_version
+          fi
+
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.23
+          go-version: 1.22
           cache-dependency-path: ${{ github.workspace }}/alist-lib/alist/go.sum
 
       - uses: actions/setup-java@v4
@@ -43,7 +59,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
 
-      - name: Build AList
+      - name: Build OpenList
         run: |
             cd $GITHUB_WORKSPACE/alist-lib/scripts
             chmod +x *.sh
@@ -55,7 +71,7 @@ jobs:
       - name: Upload AAR
         uses: actions/upload-artifact@v4
         with:
-          name: "AList"
+          name: "OpenList"
           path: "${{ github.workspace }}/android/app/libs/*.aar"
 
       - name: Init Signature
@@ -84,6 +100,16 @@ jobs:
       - name: Init APP Version Name
         run: |
           echo "ver_name=$(grep -m 1 'versionName' ${{ env.output }}/output-metadata.json | cut -d\" -f4)" >> $GITHUB_ENV
+
+      - name: Commit Changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "93746390+Suzu008@users.noreply.github.com"
+          git add .
+          git commit -m "Update OpenList to ${{ env.openlist_version }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: softprops/action-gh-release@v1
         with:

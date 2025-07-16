@@ -41,21 +41,21 @@ class _AppAboutDialogState extends State<AppAboutDialog> {
   @override
   Widget build(BuildContext context) {
     final alistUrl =
-        "https://github.com/alist-org/alist/releases/tag/$_alistVersion";
+        "https://github.com/OpenListTeam/OpenList/releases/tag/$_alistVersion";
     final appUrl =
-        "https://github.com/jing332/AListFlutter/releases/tag/$_version";
+        "https://github.com/Suzu008/OpenListFlutter/releases/tag/$_version";
     return AboutDialog(
       applicationName: S.of(context).appName,
       applicationVersion: '$_version ($_versionCode)',
       applicationIcon: SvgPicture.asset(
-        "assets/alist.svg",
+        "assets/openlist.svg",
         width: 48,
         height: 48,
       ),
       children: [
         TextButton(
           onPressed: () {
-            IntentUtils.getUrlIntent(alistUrl).launchChooser("AList");
+            IntentUtils.getUrlIntent(alistUrl).launchChooser("OpenList");
           },
           onLongPress: () {
             Clipboard.setData(ClipboardData(text: alistUrl));
@@ -63,11 +63,11 @@ class _AppAboutDialogState extends State<AppAboutDialog> {
                 message: S.of(context).copiedToClipboard,
                 duration: const Duration(seconds: 1)));
           },
-          child: const Text("AList"),
+          child: const Text("OpenList"),
         ),
         TextButton(
             onPressed: () {
-              IntentUtils.getUrlIntent(appUrl).launchChooser("AListFlutter");
+              IntentUtils.getUrlIntent(appUrl).launchChooser("OpenListFlutter");
             },
             onLongPress: () {
               Clipboard.setData(ClipboardData(text: appUrl));
@@ -75,7 +75,7 @@ class _AppAboutDialogState extends State<AppAboutDialog> {
                   message: S.of(context).copiedToClipboard,
                   duration: const Duration(seconds: 1)));
             },
-            child: const Text("AListFlutter")),
+            child: const Text("OpenListFlutter")),
       ],
     );
   }

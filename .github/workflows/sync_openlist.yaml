@@ -1,0 +1,40 @@
+name: CheckOpenList
+
+on:
+  schedule:
+    - cron: "0 5,17 * * *" # 每日5点和17点执行
+  workflow_dispatch:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "sync_openlist.yaml"  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION_FILE: ${{ github.workspace }}/openlist_version
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          cd $GITHUB_WORKSPACE/.github/scripts
+          chmod +x ./*.sh
+
+          touch ${{ env.VERSION_FILE }}
+          ./check_openlist.sh
+
+      - name: Check for OpenList Update
+        run: |
+          echo "openlist_version=${{ env.openlist_version }}"
+          echo "openlist_update=${{ env.openlist_update }}" 
+
+          if [ ${{ env.openlist_update }} -eq 0 ]
+          then
+            echo "无更新"
+          else
+            echo "触发 release.yaml workflow..."
+            gh workflow run release.yaml -R Suzu008/OpenListFlutter
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
