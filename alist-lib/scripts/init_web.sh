@@ -5,3 +5,4 @@ tar -zxvf dist.tar.gz
 rm -rf ../public/dist
 mv -f dist ../public
 rm -rf dist.tar.gz
+
