@@ -1,12 +1,12 @@
 #!/bin/bash
 
-GIT_REPO="https://github.com/Clouddark75/alist.git"
+GIT_REPO="https://github.com/Clouddark75/OpenList.git"
 TAG_NAME=$(git -c 'versionsort.suffix=-' ls-remote --exit-code --refs --sort='version:refname' --tags $GIT_REPO | tail --lines=1 | cut --delimiter='/' --fields=3)
 
-echo "AList - ${TAG_NAME}"
+echo "OpenList - ${TAG_NAME}"
 rm -rf ./src
 unset GIT_WORK_TREE
-git clone https://github.com/Clouddark75/alist.git ./src
+git clone https://github.com/Clouddark75/OpenList.git ./src
 rm -rf ./src/.git
 
 mv -f ./src/* ../
